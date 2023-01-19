@@ -18,7 +18,10 @@ fn main() {
 
         println!("You guessed: {your_guess}");
 
-        let guess: u32 = your_guess.trim().parse().expect("Please type a number");
+        let guess: u32 = match your_guess.trim().parse() {
+            Ok(guess) => guess,
+            Err(_) => continue,
+        };
 
         match guess.cmp(&secret) {
             Ordering::Less => println!("Too small"),
