@@ -2,6 +2,14 @@ use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
 
+fn process_guess(guess: u32, answer: u32) -> &'static str {
+    match guess.cmp(&answer) {
+        Ordering::Less => return "Too small",
+        Ordering::Greater => return "Too big",
+        Ordering::Equal => return "You win!"
+    }
+}
+
 fn main() {
     let secret = rand::thread_rng().gen_range(1..100);
     println!("{secret}");
@@ -23,13 +31,12 @@ fn main() {
             Err(_) => continue,
         };
 
-        match guess.cmp(&secret) {
-            Ordering::Less => println!("Too small"),
-            Ordering::Greater => println!("Too big"),
-            Ordering::Equal => {
-                println!("You win!");
-                break;
-            }
+        let g_result = process_guess(guess, secret);
+        println!("{}", g_result);
+        if g_result == "You win!" {
+            break;
         }
+        
+        
     }
 }
