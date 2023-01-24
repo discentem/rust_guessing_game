@@ -2,6 +2,7 @@ use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
 
+#[derive(PartialEq)]
 enum GuessResult {
     Small, 
     Big,
@@ -38,10 +39,10 @@ fn main() {
         };
 
         let g_result = process_guess(guess, secret);
-        if matches!(g_result, GuessResult::Win) {
+        if g_result == GuessResult::Win {
             println!("You win!");
             break;
-        } else if matches!(g_result, GuessResult::Small) {
+        } else if g_result == GuessResult::Small {
             println!("Too low! Guess again!")
         } else {
             println!("Too high! Guess again!")
